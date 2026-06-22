@@ -1,0 +1,43 @@
+name: CI Pipeline
+
+on:
+  push:
+    paths:
+      - "4_github_Actions_CICD/**"
+  pull_request:
+    paths:
+      - "4_github_Actions_CICD/**"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 4_github_Actions_CICD
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Build and Install Dependency
+      - name: Install dependencies and build Docker image
+        run: |
+          npm install
+          docker build -t cipipe .
+
+      # 2. Test and ESLint
+      - name: Run and test
+        run: |
+          npm test
+
+      # 3. Run Docker container
+      - name: Run Docker container
+        run: |
+          docker run -d --name a1 -p 3000:3000 cipipe
+
+          # Optional: Add a small sleep to let the app start
+          sleep 5
+
+          # Verify container is running
+          docker ps

@@ -1,0 +1,25 @@
+Linux Monitoring Report - 18-06-26-11-47-50
+-----------------------------------
+CPU Usage:
+ 11:47:50 up 1 day,  6:27,  0 users,  load average: 0.16, 0.07, 0.02
+DISK USAGE:
+Filesystem      Size  Used Avail Use% Mounted on
+overlay        1007G   12G  945G   2% /
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+D:\             617G  322G  295G  53% /work
+/dev/sdd       1007G   12G  945G   2% /etc/hosts
+tmpfs           3.8G     0  3.8G   0% /proc/acpi
+tmpfs           3.8G     0  3.8G   0% /proc/scsi
+tmpfs           3.8G     0  3.8G   0% /sys/firmware
+MEMORY USAGE:
+               total        used        free      shared  buff/cache   available
+Mem:           7.5Gi       911Mi       6.0Gi       4.7Mi       819Mi       6.6Gi
+Swap:          2.0Gi          0B       2.0Gi
+TOP 5 MEMORY CONSUMING PROCESSES:
+root        13  0.0  0.0   4504  1812 ?        D    11:47   0:00 /bin/bash ./monitor.sh
+root        12  0.0  0.0  16104  6400 ?        R    11:47   0:00 sort -rn -k4
+root        11  0.0  0.0   6752  3840 ?        R    11:47   0:00 ps aux
+root         1 18.4  0.0   4504  3328 ?        Ss   11:47   0:00 /bin/bash ./monitor.sh
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+
