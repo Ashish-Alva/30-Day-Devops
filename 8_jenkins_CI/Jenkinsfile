@@ -1,14 +1,15 @@
 pipeline {
     agent any
 
-    environment{
+    environment {
         DOCKER_IMAGE_NAME = "ashishalva/hello-python"
     }
 
     stages {
+
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Ashish-Alva/30-Day-Devops.git'
+                checkout scm
             }
         }
 
@@ -18,41 +19,34 @@ pipeline {
                     script {
                         app = docker.build("${DOCKER_IMAGE_NAME}:latest")
                     }
-                } 
-            } // <--- THIS BRACE WAS MISSING in your script
+                }
+            }
         }
 
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-hub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                         docker.image("${DOCKER_IMAGE_NAME}:latest").push()
                     }
                 }
             }
         }
-        
-        stage('Stage 1 : Greetings') {
+
+        stage('Run Container & Show Output') {
             steps {
-                echo 'Hello World'
+                sh "docker run --rm ${DOCKER_IMAGE_NAME}:latest"
             }
         }
-        
-        stage('Stage 2 : Install Git and python dependencies') {
-            steps {
-                sh '''
-                    sudo dnf install git -y
-                    sudo dnf install -y python3    
-                '''
-            }
+
+    }
+
+    post {
+        success {
+            echo 'Pipeline complete — image built, pushed, and executed!'
         }
-        
-        stage('Stage 3 : Run Python file') {
-            steps {
-                dir('8_jenkins_CI'){
-                    sh 'python3 hello.py'
-                }
-            }
+        failure {
+            echo 'Pipeline failed. Check console output above.'
         }
     }
 }
