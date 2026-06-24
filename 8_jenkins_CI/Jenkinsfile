@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('Checkout') {
+            steps {
+                // This downloads your repo into the workspace
+                git branch: 'main', url: 'https://github.com/Ashish-Alva/30-Day-Devops.git'
+            }
+        }
+        
+        stage('Stage 1 : Greetings') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        
+        stage('Stage 2 : Install Git and python dependencies') {
+            steps {
+                sh '''
+                    sudo dnf install git -y
+                    sudo dnf install -y python3    
+                '''            
+            
+            }
+            
+        }
+        
+            stage('Stage 3 : Run Python file') {
+            steps {
+                 
+                    dir('8_jenkins_CI'){
+                        sh  'python3 hello.py'
+                    }
+                  
+                    
+            
+            }
+            
+        }
+        
+        
+        
+    }
+}
