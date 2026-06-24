@@ -5,12 +5,9 @@ pipeline {
         DOCKER_IMAGE_NAME = "ashishalva/hello-python"
     }
 
-
     stages {
-        
         stage('Checkout') {
             steps {
-                // This downloads your repo into the workspace
                 git branch: 'main', url: 'https://github.com/Ashish-Alva/30-Day-Devops.git'
             }
         }
@@ -18,18 +15,16 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 dir('8_jenkins_CI') {
-                    // This command uses the Dockerfile to build the image
-                    script{
+                    script {
                         app = docker.build("${DOCKER_IMAGE_NAME}:latest")
                     }
-                    
-                }
+                } 
+            } // <--- THIS BRACE WAS MISSING in your script
         }
 
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Login using your Docker Hub credentials stored in Jenkins
                     docker.withRegistry('', 'docker-hub-credentials') {
                         docker.image("${DOCKER_IMAGE_NAME}:latest").push()
                     }
@@ -48,26 +43,16 @@ pipeline {
                 sh '''
                     sudo dnf install git -y
                     sudo dnf install -y python3    
-                '''            
-            
+                '''
             }
-            
         }
         
-            stage('Stage 3 : Run Python file') {
+        stage('Stage 3 : Run Python file') {
             steps {
-                 
-                    dir('8_jenkins_CI'){
-                        sh  'python3 hello.py'
-                    }
-                  
-                    
-            
+                dir('8_jenkins_CI'){
+                    sh 'python3 hello.py'
+                }
             }
-            
-        }
-        
-        
         }
     }
 }
