@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  blue:
+    build:
+      context: ./app
+    container_name: blue
+    environment:
+      - VERSION=blue
+    networks:
+      - appnet
+
+  green:
+    build:
+      context: ./app
+    container_name: green
+    environment:
+      - VERSION=green
+    networks:
+      - appnet
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro # start with blue
+    depends_on:
+      - blue
+      - green
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
