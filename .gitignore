@@ -1,4 +1,27 @@
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# =========================
 # Terraform
+# =========================
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate
@@ -13,6 +36,43 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
+# =========================
+# SSH Keys & Secrets
+# =========================
+*.pem
+*.key
+*.crt
+*.p12
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# IDE Files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# Documents (Optional)
+# =========================
 details.txt
-Linux-1.pem
 30-Day-DevOps-Challenge.pdf
+
+# =========================
+# Docker
+# =========================
+.dockerignore
+docker-compose.override.yml
